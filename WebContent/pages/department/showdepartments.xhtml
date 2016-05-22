@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+</h:head> 
+<h:body> 
+	<ui:composition template="/templates/common/commonLayout.xhtml">
+  		<ui:define name="content">
+			<h:form id="form">
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable id="deps" var="dep" value="#{departmentsMB.allDepartments}"
+							 resizableColumns="true" rows="7" widgetVar="depsTable"
+							 paginator="true" paginatorPosition="bottom"
+							 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} "
+							 editable="true" filteredValue="#{departmentsMB.filteredDepartments}"
+							 emptyMessage="No departments found with given criteria">
+
+					<p:ajax event="rowEdit" listener="#{departmentsMB.updateDepartment(dep)}"
+							update=":form:msgs" />
+					<p:ajax event="rowEditCancel" listener="#{departmentsMB.onRowCancel}"
+							update=":form:msgs" />
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter"
+										 onkeyup="PF('depsTable').filter()" style="width:150px"
+										 placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Id" style="width:3%">
+								<h:outputText value="#{dep.depId}" />
+					</p:column>
+
+					<p:column headerText="Department name" filterBy="#{dep.depName}"
+							  filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dep.depName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{dep.depName}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="City" filterBy="#{dep.location}"
+							  filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{dep.location}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{dep.location}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column style="width:10%" rendered="#{userMB.hasAccess()}">
+						<p:commandButton value="Delete" actionListener="#{departmentsMB.deleteDepartment(dep)}" 
+										 update=":form" styleClass="buttons-style" icon="ui-icon-delete"/>
+					</p:column>
+
+					<p:column style="width:3%" rendered="#{userMB.hasAccess()}">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+  	</ui:composition>
+  	
+</h:body> 
+</html>

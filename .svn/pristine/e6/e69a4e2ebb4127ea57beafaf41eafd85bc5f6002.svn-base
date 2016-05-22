@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<h:body> 
+  <ui:composition>
+	<h:form>
+ 	 <p:menubar id="menuBar">
+  		 <p:submenu label="Users">
+     		<p:menuitem value="Create user"
+    					action="/pages/users/createuser.xhtml"
+    					rendered="#{userMB.hasAccess()}"/>
+    		<p:menuitem value="Show all users"
+    					action="/pages/users/showusers.xhtml"/>
+         </p:submenu>
+   
+   	     <p:submenu label="Departments">
+    		<p:menuitem value="Create department"
+    					action="/pages/department/createdepartment.xhtml"
+    					rendered="#{userMB.hasAccess()}"/>
+            <p:menuitem value="Show all departments"
+    					action="/pages/department/showdepartments.xhtml"/>
+         </p:submenu>
+         
+         <p:submenu label="Addresses">
+    		<p:menuitem value="Add address"
+    					action="/pages/address/addaddress.xhtml"
+    					rendered="#{userMB.hasAccess()}"/>
+            <p:menuitem value="Show all addresses"
+    					action="/pages/address/showaddresses.xhtml"/>
+         </p:submenu>
+            <p:menuitem id="homeButton" value="Home" action="/pages/index.xhtml"/>
+            	<f:facet name="options">
+           	 		<p:outputLabel value="Welcome, #{login.currentUser.firstName} #{login.currentUser.lastName}"/>
+            	    <p:commandButton value="Logout" action="#{login.logout()}" styleClass="buttons-style" />
+        		</f:facet>
+     </p:menubar>	
+	</h:form>
+  </ui:composition>
+</h:body> 
+</html>

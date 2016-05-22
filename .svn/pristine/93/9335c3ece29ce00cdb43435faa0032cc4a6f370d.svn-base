@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+</h:head> 
+<h:body> 
+
+	<ui:composition template="/templates/common/commonLayout.xhtml">
+  		<ui:define name="content">
+			<h:form id="form">
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable id="users" var="user" value="#{userMB.allUsers}"
+							 resizableColumns="true" rows="7" widgetVar="usersTable"
+							 paginator="true" paginatorPosition="bottom"
+							 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} "
+							 editable="true" filteredValue="#{userMB.filteredUsers}"
+							 emptyMessage="No users found with given criteria">
+
+					<p:ajax event="rowEdit" listener="#{userMB.updateUser(user)}"
+							update=":form:msgs" />
+					<p:ajax event="rowEditCancel" listener="#{userMB.onRowCancel}"
+							update=":form:msgs" />
+	
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter" onkeyup="PF('usersTable').filter()" style="width:150px"
+								         placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Id" style="width:2%">
+						<h:outputText value="#{user.userid}" />
+					</p:column>
+
+					<p:column headerText="First name" filterBy="#{user.firstName}" 
+					          filterMatchMode="startsWith" style="width:9%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.firstName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="modelInput" value="#{user.firstName}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Last name" filterBy="#{user.lastName}" 
+							  filterMatchMode="startsWith" style="width:9%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.lastName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{user.lastName}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Email" filterBy="#{user.email}" 
+							  filterMatchMode="startsWith" style="width:12%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.email}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{user.email}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="UserName" filterBy="#{user.userName}" 
+							  filterMatchMode="startsWith" style="width:9%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.userName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{user.userName}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Role" style="width:7%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.role.name}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="rolList" value="#{userMB.role}" converter="#{roleConverter}" style="width:125px">
+									<f:selectItems value="#{userMB.allRoles}" var="rol"
+										itemValue="#{rol}" itemLabel="#{rol.name}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+					
+					<p:column headerText="Department" style="width:7%">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{user.department.depName}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:selectOneMenu id="depList" value="#{userMB.department}" converter="#{departmentConverter}" style="width:125px">
+									<f:selectItems value="#{userMB.availableDepartments}" var="dep"
+										itemValue="#{dep}" itemLabel="#{dep.depName}" />
+								</p:selectOneMenu>
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:7%" rendered="#{userMB.hasAccess()}">
+						<p:commandButton value="Delete" action="#{userMB.deleteUser(user)}" styleClass="buttons-style" />
+					</p:column>
+
+					<p:column style="width:3%" rendered="#{userMB.hasAccess()}">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+  	</ui:composition>
+
+</h:body> 
+</html>

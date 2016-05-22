@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<h:body> 
+	<ui:composition template="/templates/common/commonLayout.xhtml">
+  		<ui:define name="content">
+			<h:form id="addressForm">
+				<p:growl id="msgs" showDetail="true" />
+
+				<p:dataTable id="addresses" var="addr" value="#{addressController.allAddresses}"
+							 resizableColumns="true" rows="15" widgetVar="addressesTable"
+							 paginator="true" paginatorPosition="bottom"
+							 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} "
+							 editable="true" filteredValue="#{addressController.filteredAddresses}"
+							 emptyMessage="No addresses found with given criteria">
+
+					<p:ajax event="rowEdit" listener="#{addressController.updateAddress(addr)}"
+							update=":addressForm:msgs" />
+					<p:ajax event="rowEditCancel" listener="#{addressController.onRowCancel}"
+							update=":addressForm:msgs" />
+	
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Search all fields:" />
+							<p:inputText id="globalFilter" onkeyup="PF('addressesTable').filter()" style="width:150px"
+								         placeholder="Enter keyword" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Id" style="width:3%">
+						<h:outputText value="#{addr.id}" />
+					</p:column>
+
+					<p:column headerText="City" filterBy="#{addr.city}" filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{addr.city}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText id="modelInput" value="#{addr.city}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Phone" filterBy="#{addr.phone}" filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{addr.phone}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{addr.phone}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="State" filterBy="#{addr.state}" filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{addr.state}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{addr.state}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column headerText="Zip" filterBy="#{addr.zip}" filterMatchMode="startsWith">
+						<p:cellEditor>
+							<f:facet name="output">
+								<h:outputText value="#{addr.zip}" />
+							</f:facet>
+							<f:facet name="input">
+								<p:inputText value="#{addr.zip}" style="width:100%" />
+							</f:facet>
+						</p:cellEditor>
+					</p:column>
+
+					<p:column style="width:7%">
+						<p:commandButton value="Delete" action="#{addressController.removeAddress(addr)}" styleClass="buttons-style" />
+					</p:column>
+
+					<p:column style="width:3%">
+						<p:rowEditor />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:define>
+  	</ui:composition>
+</h:body> 
+</html>

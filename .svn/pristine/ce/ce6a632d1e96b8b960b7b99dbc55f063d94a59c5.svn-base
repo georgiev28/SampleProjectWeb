@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 90%;
+	font-family: Tahoma, Geneva, sans-serif;
+	background-color: #f2f2f2;
+}
+
+#menuBar {
+	margin: 0 5px;
+	width: 200px;
+}
+
+#depList {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.login-button {
+	margin: 20px;
+	text-align:center;
+	background-color: #FFFFF0;
+	text-align:center;
+	display: inline-block;
+	border-radius: 10px;
+	font-size: 20px;
+	border: 1px solid #DCDCDC;
+}
+
+.buttons-style {
+	text-align:center;
+	border: 1px solid #a1a1a1;
+    display: inline-block;
+    border-radius: 10px;
+	width: 95px;
+    height: 30px;
+}

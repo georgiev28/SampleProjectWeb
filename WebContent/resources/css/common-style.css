@@ -1,0 +1,76 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	height: 90%;
+	font-family: Tahoma, Geneva, sans-serif;
+	background-color: #f2f2f2;
+}
+
+#menuBar {
+	margin: 0 5px;
+	width: 200px;
+}
+
+#depList {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.login-button {
+	margin: 20px;
+	text-align:center;
+	background-color: #FFFFF0;
+	text-align:center;
+	display: inline-block;
+	border-radius: 10px;
+	font-size: 20px;
+	border: 1px solid #DCDCDC;
+}
+
+.buttons-style {
+	text-align:center;
+	border: 1px solid #a1a1a1;
+    display: inline-block;
+    border-radius: 10px;
+	width: 95px;
+    height: 30px;
+}
+
+.ui-icon-home{
+	background-image: url("../resources/images/ui-icon-home.png") !important;
+	background-repeat: no-repeat;
+	width:16px;
+    height:16px;
+}
+
+.ui-icon-save{
+	background-image: url("../resources/images/ui-icon-save.png") !important;
+	width:16px;
+    height:16px;
+}
+
+.ui-icon-logout{
+	background-image: url("../resources/images/ui-icon-logout.png") !important;
+	width:16px;
+    height:16px;
+}
+
+.ui-icon-users{
+	background-image: url("../resources/images/ui-icon-users.png") !important;
+	width:16px;
+    height:16px;
+}
+
+.ui-icon-delete{
+	background-image: url("../resources/images/ui-icon-delete.png") !important;
+	width:16px;
+    height:16px;
+}
+
+#left-menu-container {
+	margin: 20 px;
+	background-color: #ebebe0;
+	border-spacing: 0px 50px;
+}

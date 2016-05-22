@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+</h:head> 
+<h:body>
+
+ 	<ui:composition template="/templates/common/commonLayout.xhtml">
+  		<ui:define name="content">
+			<h:form>
+				<p:panel header="Create user" rendered="#{userMB.hasAccess()}">
+					<p:messages autoUpdate="true" />
+
+					<h:panelGrid id="grid" columns="2" cellpadding="5">
+						<h:outputLabel for="firstName" value="First name:" style="font-weight:bold" />
+						<p:inputText id="fname" value="#{userMB.user.firstName}" label="First name" />
+
+						<h:outputLabel for="lastName" value="Last name:" style="font-weight:bold" />
+						<p:inputText id="lname" value="#{userMB.user.lastName}" label="Last name"/>
+
+						<h:outputLabel for="email" value="Email:" style="font-weight:bold" />
+						<p:inputText id="email" value="#{userMB.user.email}" label="Email"/>
+
+						<h:outputLabel for="password" value="Password:" style="font-weight:bold" />
+						<p:inputText id="pass" value="#{userMB.user.password}" label="Password"/>
+
+						<h:outputLabel for="uname" value="UserName:" style="font-weight:bold" />
+						<p:inputText id="uname" value="#{userMB.user.userName}" label="UserName"/>
+						
+						<p:outputLabel for="rolList" value="Role: *" />
+						<p:selectOneMenu id="rolList" value="#{userMB.role}" converter="#{roleConverter}" style="width:125px">
+							<f:selectItems value="#{userMB.allRoles}" var="rol"
+								itemValue="#{rol}" itemLabel="#{rol.name}" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel for="depList" value="Department: *" />
+						<p:selectOneMenu id="depList" value="#{userMB.department}" converter="#{departmentConverter}" style="width:125px">
+							<f:selectItems value="#{userMB.availableDepartments}" var="dep"
+								itemValue="#{dep}" itemLabel="#{dep.depName}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					
+					<p:commandButton id="submitButton" value="Save"
+									 action="#{userMB.createUser()}"
+									 styleClass="buttons-style" 
+									 icon="ui-icon-save"/>
+				</p:panel>
+			</h:form>
+		</ui:define>
+  	</ui:composition>
+  	
+</h:body> 
+</html>

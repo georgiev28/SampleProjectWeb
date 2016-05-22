@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<h:body> 
+
+	<ui:composition template="/templates/common/commonLayout.xhtml">
+  		<ui:define name="content">
+			<h:form>
+				<p:panel header="Add address">
+					<p:messages autoUpdate="true" />
+
+					<h:panelGrid id="gridAddress" columns="3" cellpadding="5">
+						<h:outputLabel for="city" value="City:" style="font-weight:bold" />
+						<p:inputText id="city" value="#{addressController.address.city}" label="City" />
+						<h:outputText value="" />
+
+						<h:outputLabel for="phone" value="Phone:" style="font-weight:bold" />
+						<p:inputMask mask="(999)99 999 9999" id="phone" value="#{addressController.address.phone}" label="Phone"/>
+						<h:outputText value="" />
+
+						<h:outputLabel for="state" value="State:" style="font-weight:bold" />
+						<p:inputText id="state" value="#{addressController.address.state}" label="State"/>
+						<h:outputText value="" />
+
+						<h:outputLabel for="zip" value="Zip:" style="font-weight:bold" />
+						<p:inputText id="zip" value="#{addressController.address.zip}" label="Zip"/>
+						<h:outputText value="">
+						</h:outputText>
+					</h:panelGrid>
+					
+					<p:commandButton id="submitButton" value="Save"
+									 action="#{addressController.createAddress()}"
+									 styleClass="buttons-style" 
+									 icon="ui-icon-save"/>
+				</p:panel>
+			</h:form>
+		</ui:define>
+  	</ui:composition>
+  	
+</h:body> 
+</html>

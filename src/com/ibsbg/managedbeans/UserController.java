@@ -14,9 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.event.RowEditEvent;
 
-import com.ibsbg.ejb.beans.DepartmentsDAO;
-import com.ibsbg.ejb.beans.RoleDAO;
-import com.ibsbg.ejb.beans.UserDAO;
+import com.ibsbg.ejb.beans.DepartmentsBean;
+import com.ibsbg.ejb.beans.RoleBean;
+import com.ibsbg.ejb.beans.UserBean;
 import com.ibsbg.entity.Departments;
 import com.ibsbg.entity.Role;
 import com.ibsbg.entity.User;
@@ -29,16 +29,16 @@ public class UserController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private UserDAO userDAO;
+	private UserBean userBean;
 	
 	@EJB
-	private DepartmentsDAO depDAO;
+	private DepartmentsBean depBean;
 	
 	@Inject
 	private LoginController loginController;
 	
 	@EJB
-	private RoleDAO roleDAO;
+	private RoleBean roleBean;
 	
 	private User user;
 	private User currentUser;
@@ -101,21 +101,21 @@ public class UserController implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	//initialization after dep injection 
+	
 	@PostConstruct
 	public void init(){
 		user = new User();
 		department = new Departments();
 		role  = new Role();
-		setAllRoles(roleDAO.getAllRoles());
-		setAllUsers(userDAO.printAllUsers());
-		setAvailableDepartments(depDAO.showAllDepartments());
+		setAllRoles(roleBean.getAllRoles());
+		setAllUsers(userBean.printAllUsers());
+		setAvailableDepartments(depBean.showAllDepartments());
 	}
 
 	public void createUser(){
 		user.setDepartment(department);
 		user.setRole(role);
-		userDAO.create(user);
+		userBean.create(user);
 		allUsers.add(user);
 		user = new User();
 		FacesContext.getCurrentInstance()
@@ -126,13 +126,13 @@ public class UserController implements Serializable {
 		user.setUserid(user.getUserid());
 		user.setDepartment(department);
 		user.setRole(role);
-	    userDAO.update(user);
+	    userBean.update(user);
 	    FacesContext.getCurrentInstance()
 	    				.addMessage(null, new FacesMessage(user.getFirstName()+" is updated"));
 	}
 	
 	public void deleteUser(User user){
-		userDAO.remove(user.getUserid());
+		userBean.remove(user.getUserid());
 		allUsers.remove(user);
 		FacesContext.getCurrentInstance()
 						.addMessage(null, new FacesMessage("User with ID "+user.getUserid()+" removed"));
@@ -151,7 +151,7 @@ public class UserController implements Serializable {
 			user.setRole(role);
 			String password = DigestUtil.md5(user.getPassword());
 			user.setPassword(password);
-			userDAO.create(user);
+			userBean.create(user);
 			allUsers.add(user);
 			user = new User();
 			return "/login.xhtml";
@@ -160,11 +160,11 @@ public class UserController implements Serializable {
 	}
 	
 	public void findUser(){
-		 user = userDAO.findUser(getUserId());
+		 user = userBean.findUser(getUserId());
 	}
 	
 	public List<User> printAllUsers(){
-		return userDAO.printAllUsers();
+		return userBean.printAllUsers();
 	}
 
 	public int getDepid() {
@@ -217,7 +217,7 @@ public class UserController implements Serializable {
 	}
 	
 	public boolean isAlreadyRegistered(String uName){
-		if(userDAO.findUserByUserName(uName) == null){
+		if(userBean.findUserByUserName(uName) == null){
 			return false;
 		}
 		

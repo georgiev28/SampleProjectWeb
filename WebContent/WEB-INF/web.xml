@@ -18,10 +18,10 @@
   	<filter-name>AuthFilter</filter-name>
   	<filter-class>com.ibsbg.filter.AuthorizationFilter</filter-class>
   </filter>
-  <filter-mapping>
+  <!--  <filter-mapping>
   	<filter-name>AuthFilter</filter-name>
   	<url-pattern>/login.xhtml</url-pattern>
-  </filter-mapping>
+  </filter-mapping>-->
   <context-param>
     <param-name>javax.faces.PRODUCTION</param-name>
     <param-value>Development</param-value>
@@ -30,4 +30,8 @@
    <param-name>facelets.SKIP_COMMENTS</param-name>
    <param-value>true</param-value>
 </context-param>
+<mime-mapping>
+    <extension>xhtml <!--{or the extension of file}--></extension>
+    <mime-type>text/html</mime-type>
+  </mime-mapping>
 </web-app>

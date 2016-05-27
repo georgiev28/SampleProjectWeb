@@ -7,7 +7,6 @@ import javax.faces.convert.Converter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.ibsbg.entity.Departments;
 import com.ibsbg.entity.Role;
 import com.ibsbg.managedbeans.UserController;
 

@@ -57,8 +57,14 @@ body {
     height:16px;
 }
 
-.ui-icon-users{
-	background-image: url("../resources/images/ui-icon-users.png") !important;
+.users{
+	background-image: url("../resources/images/users.png") !important;
+	width:16px;
+    height:16px;
+}
+
+.add-user{
+	background-image: url("../resources/images/add_user.png") !important;
 	width:16px;
     height:16px;
 }
@@ -69,8 +75,3 @@ body {
     height:16px;
 }
 
-#left-menu-container {
-	margin: 20 px;
-	background-color: #ebebe0;
-	border-spacing: 0px 50px;
-}

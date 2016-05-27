@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head> 
+<h:body> 
+	<ui:composition template="/templates/common/commonLayout.xhtml">
+		<ui:define name="content">
+			<h:form id="form">
+				<p:panel header="Property options">
+					<p:growl autoUpdate="true" />
+
+					<p:panelGrid columns="3" cellpadding="10">
+						<p:outputLabel for="resourceList" value="Resource: *" />
+						<p:selectOneMenu id="resourceList"
+										 value="#{propertiesController.resource}"
+										 converter="resourceConverter" style="width:125px">
+							<f:selectItems value="#{propertiesController.availableResources}"
+										   var="res1" itemValue="#{res1}" itemLabel="#{res1.resName}" />
+						</p:selectOneMenu>
+
+						<h:commandButton value="+" action="#{propertiesController.addPropertyField}"
+										 styleClass="buttons-style">
+							<f:ajax render=":form:propertyFields" />
+						</h:commandButton>
+					</p:panelGrid>
+
+					<p:panelGrid id="propertyFields" columns="6">
+						<ui:repeat value="#{propertiesController.properties}" var="prop">
+							
+							<h:inputHidden value="#{prop.resPropId}" />
+							
+							<p:outputLabel for="propertyName" value="Name: " />
+							<h:inputText id="propertyName" value="#{prop.resourcePropName}" />
+
+							<p:outputLabel for="propertyValue" value=" Value: " />
+							<h:inputText id="propertyValue" value="#{prop.resourcePropValue}" />
+
+							<h:commandButton value="remove" action="#{propertiesController.removePropertyField(prop)}"
+								 			 styleClass="buttons-style">
+								<f:ajax render=":form:propertyFields" />
+							</h:commandButton>&nbsp;
+
+							<h:commandButton value="save" action="#{propertiesController.saveProperty()}"
+											 styleClass="buttons-style">
+							    <f:ajax render=":form:propertyFields" />
+							</h:commandButton>
+							<br />
+						</ui:repeat>
+					</p:panelGrid>
+				</p:panel>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body> 
+</html>

@@ -5,24 +5,24 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
 
-import com.ibsbg.ejb.beans.AddressDAO;
+import com.ibsbg.ejb.beans.AddressBean;
 import com.ibsbg.entity.Address;
 
-@RequestScoped
+@SessionScoped
 @Named("addressController")
 public class AddressController implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private AddressDAO addressDAO;
+	private AddressBean addressBean;
 	
 	private Address address;
 	private int addressId;
@@ -33,7 +33,7 @@ public class AddressController implements Serializable{
 	@PostConstruct
 	public void init(){
 		address = new Address();
-		setAllAddresses(addressDAO.printAllAddresses());
+		setAllAddresses(addressBean.printAllAddresses());
 	}
 	
 	public int getAddressId() {
@@ -52,7 +52,7 @@ public class AddressController implements Serializable{
 	}
 	
 	public void createAddress(){
-		addressDAO.create(address);
+		addressBean.create(address);
 		address = new Address();
 		FacesContext.getCurrentInstance()
 									.addMessage(null, new FacesMessage("Address is added"));
@@ -60,24 +60,24 @@ public class AddressController implements Serializable{
 	
 	public void updateAddress(Address addr){
 		address.setId(addr.getId());
-		addressDAO.update(addr);
+		addressBean.update(addr);
 		FacesContext.getCurrentInstance()
 	    							.addMessage(null, new FacesMessage("Address successfully updated"));
 	}
 	
 	public void removeAddress(Address addr){
-		addressDAO.remove(addr.getId());
+		addressBean.remove(addr.getId());
 		allAddresses.remove(addr);
 		FacesContext.getCurrentInstance()
 								    .addMessage(null, new FacesMessage("Address successfully removed"));
 	}
 	
 	public void findAddress(){
-		address = addressDAO.getAddress(getAddressId());
+		address = addressBean.getAddress(getAddressId());
 	}
 	
 	public List<Address> showAllAddresses(){
-		return addressDAO.printAllAddresses();
+		return addressBean.printAllAddresses();
 	}
 
 	public List<Address> getAllAddresses() {

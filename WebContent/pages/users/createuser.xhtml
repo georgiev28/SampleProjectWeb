@@ -42,12 +42,13 @@
 							<f:selectItems value="#{userMB.availableDepartments}" var="dep"
 								itemValue="#{dep}" itemLabel="#{dep.depName}" />
 						</p:selectOneMenu>
+						
+						<f:facet name="footer">
+							<p:commandButton id="submitButton" value="Save" action="#{userMB.createUser()}"
+									 		 styleClass="buttons-style" 
+									 		 icon="ui-icon-save"/>
+						</f:facet>
 					</h:panelGrid>
-					
-					<p:commandButton id="submitButton" value="Save"
-									 action="#{userMB.createUser()}"
-									 styleClass="buttons-style" 
-									 icon="ui-icon-save"/>
 				</p:panel>
 			</h:form>
 		</ui:define>

@@ -12,7 +12,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
 
-import com.ibsbg.ejb.beans.DepartmentsDAO;
+import com.ibsbg.ejb.beans.DepartmentsBean;
 import com.ibsbg.entity.Departments;
 
 @SessionScoped
@@ -22,7 +22,7 @@ public class DepartmentsController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
-	private DepartmentsDAO departmentsDAO;
+	private DepartmentsBean departmentsBean;
 	
 	private Departments department;
 	private int depId;
@@ -33,7 +33,7 @@ public class DepartmentsController implements Serializable {
 	@PostConstruct
 	public void init(){
 		department = new Departments();
-		setAllDepartments(departmentsDAO.showAllDepartments());
+		setAllDepartments(departmentsBean.showAllDepartments());
 	}
 	
 	public int getDepId() {
@@ -61,31 +61,31 @@ public class DepartmentsController implements Serializable {
 	}
 
 	public void createDepartment(){
-		departmentsDAO.createDepartment(department);
+		departmentsBean.createDepartment(department);
 		allDepartments.add(department);
 		department = new Departments();
 	}
 	
 	public void updateDepartment(Departments dep){
 		department.setDepId(dep.getDepId());
-		departmentsDAO.updateDepartments(dep);
+		departmentsBean.updateDepartments(dep);
 		FacesContext.getCurrentInstance()
 							 .addMessage(null, new FacesMessage(dep.getDepName()+" is updated"));
 	}
 	
 	public void deleteDepartment(Departments dep){
-		departmentsDAO.removeDepartment(dep.getDepId());
+		departmentsBean.removeDepartment(dep.getDepId());
 		allDepartments.remove(dep);
 		FacesContext.getCurrentInstance()
 							.addMessage(null, new FacesMessage("Department with ID("+dep.getDepId()+") removed"));
 	}
 	
 	public void findDepartment(){
-		department = departmentsDAO.getDepartment(getDepId());
+		department = departmentsBean.getDepartment(getDepId());
 	}
 	
 	public List<Departments> showAllDepartments(){
-		return departmentsDAO.showAllDepartments();
+		return departmentsBean.showAllDepartments();
 	}
 
 	public List<Departments> getFilteredDepartments() {

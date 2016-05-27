@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-import com.ibsbg.ejb.beans.UserDAO;
+import com.ibsbg.ejb.beans.UserBean;
 import com.ibsbg.entity.User;
 import com.ibsbg.utils.DigestUtil;
 
@@ -23,7 +23,7 @@ public class LoginController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private UserDAO userDAO;
+	private UserBean userBean;
 	
 	private User currentUser;
 	private String uName;
@@ -53,11 +53,11 @@ public class LoginController implements Serializable {
 
 	public String validateUsernamePassword(){
 		encodedPass = DigestUtil.md5(getPass());
-		boolean valid = userDAO.validate(getuName(), encodedPass);
+		boolean valid = userBean.validate(getuName(), encodedPass);
 		
 		if(valid){
 			HttpSession session = getSession();
-			currentUser = userDAO.findUserByUserName(uName);
+			currentUser = userBean.findUserByUserName(uName);
 			
 			session.setAttribute("user", currentUser);
 			return "/pages/index.xhtml?faces-redirect=true";
@@ -105,6 +105,4 @@ public class LoginController implements Serializable {
 	public void setCurrentUser(User currentUser) {
 		this.currentUser = currentUser;
 	}
-	
-	
 }
